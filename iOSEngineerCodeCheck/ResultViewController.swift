@@ -15,7 +15,6 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var languageLabel: UILabel!
-    
     @IBOutlet weak var starsLabel: UILabel!
     @IBOutlet weak var watchersLabel: UILabel!
     @IBOutlet weak var forksLabel: UILabel!
@@ -34,7 +33,6 @@ class ResultViewController: UIViewController {
         forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
         issuesLabal.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         getImage()
-        
     }
     
     func getImage(){

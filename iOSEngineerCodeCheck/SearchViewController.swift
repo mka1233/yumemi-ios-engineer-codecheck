@@ -9,10 +9,10 @@
 import UIKit
 
 class SearchViewController: UITableViewController, UISearchBarDelegate {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var repositories: [[String: Any]]=[]
+    var repositories: [[String: Any]] = []
     
     var task: URLSessionTask?
     var word: String!
@@ -21,13 +21,12 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
         searchBar.text = ""
         return true
     }
@@ -45,15 +44,14 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
             task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
                 if let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                     if let items = obj["items"] as? [[String: Any]] {
-                    self.repositories = items
+                        self.repositories = items
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
                     }
                 }
             }
-        // これ呼ばなきゃリストが更新されません
-        task?.resume()
+            task?.resume()
         }
         
     }
@@ -83,10 +81,8 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
         index = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
-        
     }
     
 }
