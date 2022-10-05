@@ -42,11 +42,13 @@ class ResultViewController: UIViewController {
         titleLabel.text = repository["full_name"] as? String
         
         if let owner = repository["owner"] as? [String: Any] {
-            if let imgURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
-                    let img = UIImage(data: data!)!
+            if let imageURL = owner["avatar_url"] as? String {
+                guard let imageURL = URL(string: imageURL) else { return }
+                URLSession.shared.dataTask(with: imageURL) { (data, res, err) in
+                    guard let data = data else { return }
+                    let image = UIImage(data: data)
                     DispatchQueue.main.async {
-                        self.imageView.image = img
+                        self.imageView.image = image
                     }
                 }.resume()
             }
