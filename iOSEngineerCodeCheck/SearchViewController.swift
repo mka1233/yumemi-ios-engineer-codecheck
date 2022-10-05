@@ -43,6 +43,10 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
             urlString = "https://api.github.com/search/repositories?q=\(word)"
             guard let url = URL(string: urlString) else { return }
             task = URLSession.shared.dataTask(with: url) { (data, res, err) in
+                if let error = err {
+                    print(error)
+                    return
+                }
                 guard let data = data else { return }
                 if let obj = try! JSONSerialization.jsonObject(with: data) as? [String: Any] {
                     if let items = obj["items"] as? [[String: Any]] {

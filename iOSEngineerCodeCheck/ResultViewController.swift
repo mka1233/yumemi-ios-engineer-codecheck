@@ -45,6 +45,10 @@ class ResultViewController: UIViewController {
             if let imageURL = owner["avatar_url"] as? String {
                 guard let imageURL = URL(string: imageURL) else { return }
                 URLSession.shared.dataTask(with: imageURL) { (data, res, err) in
+                    if let error = err {
+                        print(error)
+                        return
+                    }
                     guard let data = data else { return }
                     let image = UIImage(data: data)
                     DispatchQueue.main.async {
