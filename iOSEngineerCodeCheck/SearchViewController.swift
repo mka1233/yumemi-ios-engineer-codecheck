@@ -15,9 +15,9 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     var repositories: [[String: Any]] = []
     
     var task: URLSessionTask?
-    var word: String!
-    var url: String!
-    var index: Int!
+    var word: String?
+    var urlString: String = ""
+    var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +40,8 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         guard let word = searchBar.text else { return }
         
         if word.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(word)"
-            guard let url = URL(string: url) else { return }
+            urlString = "https://api.github.com/search/repositories?q=\(word)"
+            guard let url = URL(string: urlString) else { return }
             task = URLSession.shared.dataTask(with: url) { (data, res, err) in
                 guard let data = data else { return }
                 if let obj = try! JSONSerialization.jsonObject(with: data) as? [String: Any] {
