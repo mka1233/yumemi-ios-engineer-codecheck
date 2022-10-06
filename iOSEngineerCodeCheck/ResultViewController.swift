@@ -44,7 +44,7 @@ class ResultViewController: UIViewController {
         if let owner = repository["owner"] as? [String: Any] {
             if let imageURL = owner["avatar_url"] as? String {
                 guard let imageURL = URL(string: imageURL) else { return }
-                URLSession.shared.dataTask(with: imageURL) { (data, res, err) in
+                URLSession.shared.dataTask(with: imageURL) { [weak self] (data, res, err) in
                     if let error = err {
                         print(error)
                         return
@@ -52,7 +52,7 @@ class ResultViewController: UIViewController {
                     guard let data = data else { return }
                     let image = UIImage(data: data)
                     DispatchQueue.main.async {
-                        self.imageView.image = image
+                        self?.imageView.image = image
                     }
                 }.resume()
             }

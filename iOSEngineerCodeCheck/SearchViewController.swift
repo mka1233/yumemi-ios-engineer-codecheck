@@ -42,7 +42,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         if word.count != 0 {
             urlString = "https://api.github.com/search/repositories?q=\(word)"
             guard let url = URL(string: urlString) else { return }
-            task = URLSession.shared.dataTask(with: url) { (data, res, err) in
+            task = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
                 if let error = err {
                     print(error)
                     return
@@ -50,9 +50,9 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
                 guard let data = data else { return }
                 if let obj = try! JSONSerialization.jsonObject(with: data) as? [String: Any] {
                     if let items = obj["items"] as? [[String: Any]] {
-                        self.repositories = items
+                        self?.repositories = items
                         DispatchQueue.main.async {
-                            self.tableView.reloadData()
+                            self?.tableView.reloadData()
                         }
                     }
                 }
