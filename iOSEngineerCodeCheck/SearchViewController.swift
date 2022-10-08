@@ -38,7 +38,6 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         guard let word = searchBar.text else { return }
-        
         urlString = "https://api.github.com/search/repositories?q=\(word)"
         guard let url = URL(string: urlString) else { return }
         task = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
@@ -47,16 +46,22 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
                 return
             }
             guard let data = data else { return }
-            if let obj = try? JSONDecoder().decode(SearchRepositoryData.self, from: data) {
-                self?.repositories = obj.items
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadData()
-                }
+            let decoder = JSONDecoder()
+            do {
+                let decodeData = try decoder.decode(SearchRepositoryData.self, from: data)
+                let items = decodeData.items
+                self?.repositories = items
+            } catch {
+                print(error)
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
             }
         }
         task?.resume()
-        
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

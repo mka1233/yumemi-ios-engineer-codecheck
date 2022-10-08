@@ -28,14 +28,14 @@ class ResultViewController: UIViewController {
         let repository = searchVC.repositories[searchVC.index]
         
         languageLabel.text = "Written in \(repository.language)"
-        starsLabel.text = "\(repository.stargazers_count)"
-        watchersLabel.text = "\(repository.watchers_count)"
-        forksLabel.text = "\(repository.forks_count)"
-        issuesLabal.text = "\(repository.open_issues_count)"
+        starsLabel.text = "\(repository.stargazers_count) stars"
+        watchersLabel.text = "\(repository.watchers_count) watchers"
+        forksLabel.text = "\(repository.forks_count) forks"
+        issuesLabal.text = "\(repository.open_issues_count) open issues"
         getImage()
     }
     
-    func getImage(){
+    func getImage() {
         
         let repository = searchVC.repositories[searchVC.index]
         
