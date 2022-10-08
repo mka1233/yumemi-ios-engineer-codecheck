@@ -60,6 +60,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
             }
         }
         task?.resume()
+        searchBar.resignFirstResponder()
     }
     
     
