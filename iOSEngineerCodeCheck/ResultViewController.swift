@@ -27,7 +27,7 @@ class ResultViewController: UIViewController {
         
         let repository = searchVC.repositories[searchVC.index]
         
-        languageLabel.text = "Written in \(repository.language)"
+        languageLabel.text = "Written in \(repository.language ?? "unknown")"
         starsLabel.text = "\(repository.stargazers_count) stars"
         watchersLabel.text = "\(repository.watchers_count) watchers"
         forksLabel.text = "\(repository.forks_count) forks"
